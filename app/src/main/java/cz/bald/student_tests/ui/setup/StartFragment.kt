@@ -23,7 +23,7 @@ class StartFragment(private val test: String) : Fragment() {
 
         view.start_button.setOnClickListener {
             val fcl = activity as FragmentChangeListener
-            fcl.swapFragment(LanguageFragment(test))
+            fcl.swapFragment(LanguageFragment(test), true)
         }
 
         return view

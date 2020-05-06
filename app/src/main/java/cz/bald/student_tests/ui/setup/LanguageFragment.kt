@@ -23,12 +23,12 @@ class LanguageFragment(private val testSetting: String) : Fragment() {
 
         view.slovak_button.setOnClickListener {
             val fcl = activity as FragmentChangeListener
-            fcl.swapFragment(SubjectFragment(testSetting + " - sk"))
+            fcl.swapFragment(SubjectFragment(testSetting + " - sk"), true)
         }
 
         view.czech_button.setOnClickListener {
             val fcl = activity as FragmentChangeListener
-            fcl.swapFragment(SubjectFragment(testSetting + " - cz"))
+            fcl.swapFragment(SubjectFragment(testSetting + " - cz"), true)
         }
 
         return view

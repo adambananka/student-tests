@@ -19,15 +19,15 @@ class TestActivity : AppCompatActivity(), FragmentChangeListener {
 
         val fragment = QuestionFragment(listOf(1, 2, 2, 3, 2, 1, 2, 3, 2), 0, Int.MIN_VALUE,
             Int.MIN_VALUE)
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
+        swapFragment(fragment, true)
     }
 
-    override fun swapFragment(newFragment: Fragment) {
-        supportFragmentManager.beginTransaction()
+    override fun swapFragment(newFragment: Fragment, stack: Boolean) {
+        val transaction = supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, newFragment)
-            //.addToBackStack(newFragment.toString())
-            .commit()
+        if (stack) {
+            transaction.addToBackStack(newFragment.toString())
+        }
+        transaction.commit()
     }
 }

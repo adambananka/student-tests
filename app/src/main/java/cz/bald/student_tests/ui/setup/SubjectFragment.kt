@@ -27,7 +27,7 @@ class SubjectFragment(private val testSetting: String) : Fragment() {
 
         view.subject_list.setOnItemClickListener{ adapterView, _, i, _ ->
             val fcl = activity as FragmentChangeListener
-            fcl.swapFragment(YearFragment(testSetting + " - " + adapterView.getItemAtPosition(i)))
+            fcl.swapFragment(YearFragment(testSetting + " - " + adapterView.getItemAtPosition(i)), true)
         }
 
         return view

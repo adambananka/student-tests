@@ -26,7 +26,7 @@ class SetupActivity : AppCompatActivity(), FragmentChangeListener, SetupListener
             .commit()
     }
 
-    override fun swapFragment(newFragment: Fragment) {
+    override fun swapFragment(newFragment: Fragment, stack: Boolean) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, newFragment)
             .addToBackStack(newFragment.toString())

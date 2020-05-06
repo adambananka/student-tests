@@ -28,7 +28,7 @@ class YearFragment(private val testSetting: String) : Fragment() {
 
         view.year_list.setOnItemClickListener { adapterView, _, i, _ ->
             val fcl = activity as FragmentChangeListener
-            fcl.swapFragment(ReviewFragment(testSetting + " - " + adapterView.getItemAtPosition(i)))
+            fcl.swapFragment(ReviewFragment(testSetting + " - " + adapterView.getItemAtPosition(i)), true)
         }
 
         return view

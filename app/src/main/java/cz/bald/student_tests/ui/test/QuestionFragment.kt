@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import cz.bald.student_tests.ui.listener.FragmentChangeListener
 import cz.bald.studenttests.R
@@ -55,30 +56,9 @@ class QuestionFragment(private val test: List<Int>, private val index: Int,
                 "životom slovami: „My mu cestu jeho, tak pekne nastúpivšiemu všetku slávu a všetok prospech " +
                 "prajeme s túžbou nádejnou ďalšie jeho práce očakávajúc.“"
 
-        if (index > 0) {
-            frag.section_back_button.setOnClickListener {
-                val fcl = activity as FragmentChangeListener
-                fcl.swapFragment(QuestionFragment(test, index - 1, sectionIndex, Int.MIN_VALUE))
-            }
-        } else {
-            frag.section_back_button.visibility = View.INVISIBLE
-        }
-        if (navIndex >= 0) {
-            frag.section_question_button.setOnClickListener {
-                val fcl = activity as FragmentChangeListener
-                fcl.swapFragment(QuestionFragment(test, navIndex, index, Int.MIN_VALUE))
-            }
-        } else {
-            frag.section_question_button.visibility = View.INVISIBLE
-        }
-        if (index < test.size - 1) {
-            frag.section_next_button.setOnClickListener {
-                val fcl = activity as FragmentChangeListener
-                fcl.swapFragment(QuestionFragment(test, index + 1, index, Int.MIN_VALUE))
-            }
-        } else {
-            frag.section_next_button.visibility = View.INVISIBLE
-        }
+        setupBackButton(frag.section_back_button)
+        setupNavButton(frag.section_question_button, navIndex, navIndex, index, Int.MIN_VALUE)
+        setupNextButton(frag.section_next_button, index)
 
         return frag
     }
@@ -94,33 +74,12 @@ class QuestionFragment(private val test: List<Int>, private val index: Int,
                 "(C) na zhrnutie názorov Sládkovičových súčasníkov na dielo Marína.",
                 "(D) na kritiku subjektívneho pohľadu literárnych recenzentov Maríny."))
 
-        frag.question_test_answers.setOnItemClickListener { adapterView, view, i, l ->
+        frag.question_test_answers.setOnItemClickListener { _, view, _, _ ->
             view.isSelected = true
         }
-        if (index > 0) {
-            frag.question_test_back_button.setOnClickListener {
-                val fcl = activity as FragmentChangeListener
-                fcl.swapFragment(QuestionFragment(test, index - 1, sectionIndex, Int.MIN_VALUE))
-            }
-        } else {
-            frag.section_back_button.visibility = View.INVISIBLE
-        }
-        if (sectionIndex >= 0) {
-            frag.question_test_section_button.setOnClickListener {
-                val fcl = activity as FragmentChangeListener
-                fcl.swapFragment(QuestionFragment(test, sectionIndex, sectionIndex, index))
-            }
-        } else {
-            frag.section_question_button.visibility = View.INVISIBLE
-        }
-        if (index < test.size - 1) {
-            frag.question_test_next_button.setOnClickListener {
-                val fcl = activity as FragmentChangeListener
-                fcl.swapFragment(QuestionFragment(test, index + 1, sectionIndex, Int.MIN_VALUE))
-            }
-        } else {
-            frag.section_next_button.visibility = View.INVISIBLE
-        }
+        setupBackButton(frag.question_test_back_button)
+        setupNavButton(frag.question_test_section_button, sectionIndex, sectionIndex, sectionIndex, index)
+        setupNextButton(frag.question_test_next_button, sectionIndex)
 
         return frag
     }
@@ -132,31 +91,46 @@ class QuestionFragment(private val test: List<Int>, private val index: Int,
         frag.question_open_text.text = "Napíšte názov diela Jána Kollára, na ktoré sa odvolával J. Lomenčík v úvode ukážky " +
                 "a ktorého názov patrí na zakryté miesto v nej?"
 
-        if (index > 0) {
-            frag.question_open_back_button.setOnClickListener {
-                val fcl = activity as FragmentChangeListener
-                fcl.swapFragment(QuestionFragment(test, index - 1, sectionIndex, Int.MIN_VALUE))
-            }
-        } else {
-            frag.section_back_button.visibility = View.INVISIBLE
-        }
-        if (sectionIndex >= 0) {
-            frag.question_open_section_button.setOnClickListener {
-                val fcl = activity as FragmentChangeListener
-                fcl.swapFragment(QuestionFragment(test, sectionIndex, sectionIndex, index))
-            }
-        } else {
-            frag.section_question_button.visibility = View.INVISIBLE
-        }
-        if (index < test.size - 1) {
-            frag.question_open_next_button.setOnClickListener {
-                val fcl = activity as FragmentChangeListener
-                fcl.swapFragment(QuestionFragment(test, index + 1, sectionIndex, Int.MIN_VALUE))
-            }
-        } else {
-            frag.section_next_button.visibility = View.INVISIBLE
-        }
+        setupBackButton(frag.question_open_back_button)
+        setupNavButton(frag.question_open_section_button, sectionIndex, sectionIndex, sectionIndex, index)
+        setupNextButton(frag.question_open_next_button, sectionIndex)
 
         return frag
+    }
+
+    private fun setupBackButton(button: Button) {
+        if (index > 0) {
+            button.setOnClickListener {
+                val fcl = activity as FragmentChangeListener
+                fcl.swapFragment(QuestionFragment(test, index - 1, sectionIndex, Int.MIN_VALUE), false)
+            }
+        } else {
+            button.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun setupNavButton(button: Button, check: Int, idx: Int, secIdx: Int, navIdx: Int) {
+        if (check >= 0) {
+            button.setOnClickListener {
+                val fcl = activity as FragmentChangeListener
+                fcl.swapFragment(QuestionFragment(test, idx, secIdx, navIdx), false)
+            }
+        } else {
+            button.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun setupNextButton(button: Button, secIdx: Int) {
+        val fcl = activity as FragmentChangeListener
+        if (index < test.size - 1) {
+            button.setOnClickListener {
+                fcl.swapFragment(QuestionFragment(test, index + 1, secIdx, Int.MIN_VALUE), false)
+            }
+        } else {
+            button.text = getString(R.string.test_finish_button)
+            button.setOnClickListener {
+                fcl.swapFragment(ResultFragment(), true)
+            }
+        }
     }
 }
