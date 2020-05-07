@@ -1,3 +1,46 @@
 <resources>
+<!--    Application general -->
     <string name="app_name">StudentTests</string>
+
+<!--    Setup Activity general -->
+
+<!--    Start Fragment -->
+    <string name="start_fragment_start_button">Select test</string>
+
+<!--    Language Fragment -->
+    <string name="language_fragment_selection">Selection:</string>
+
+<!--    Subject Fragment -->
+    <string name="subject_fragment_selection">Selection:</string>
+
+<!--    Year Fragment -->
+    <string name="year_fragment_selection">Selection:</string>
+
+<!--    Review Fragment -->
+    <string name="review_fragment_selection">Selection:</string>
+    <string name="review_fragment_start">Start test</string>
+
+<!--    Test Activity general -->
+
+<!--    Question Fragment - general -->
+    <string name="test_back_button">Previous</string>
+    <string name="test_next_button">Next</string>
+    <string name="test_finish_button">Finish</string>
+
+<!--    Question Fragment - Section -->
+    <string name="test_section_question_button">Back To Question</string>
+
+<!--    Question Fragment - Test question -->
+    <string name="test_question_test_question_number">Question:</string>
+    <string name="test_question_test_section_button">Section</string>
+
+<!--    Question Fragment - Open question -->
+    <string name="test_question_open_question_number">Question:</string>
+    <string name="test_question_open_section_button">Section</string>
+
+<!--    Result Fragment -->
+    <string name="test_result_questions">Questions:</string>
+    <string name="test_result_points">Points:</string>
+    <string name="test_result_percentage">Percentage:</string>
+    <string name="test_result_finish_button">Close</string>
 </resources>
