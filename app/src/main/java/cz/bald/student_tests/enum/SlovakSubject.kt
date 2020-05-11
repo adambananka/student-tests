@@ -1,5 +1,8 @@
 package cz.bald.student_tests.enum
 
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 enum class SlovakSubject(private val firstYear: Int, private val lastYear: Int): Subject {
     SLOVAK(2009, 2019),
     ENGLISH(2009, 2019),
@@ -11,6 +14,10 @@ enum class SlovakSubject(private val firstYear: Int, private val lastYear: Int):
 
     override fun getSubjectName(): String {
         return this.name
+    }
+
+    override fun of(text: String): Subject {
+        return valueOf(text)
     }
 
     override fun getYearsOfSubject(): Array<Int> {
