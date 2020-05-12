@@ -9,9 +9,7 @@ import cz.bald.student_tests.model.*
 import cz.bald.student_tests.ui.listener.FragmentChangeListener
 import cz.bald.student_tests.ui.setup.SetupActivity
 import cz.bald.studenttests.R
-import java.time.Instant
-import java.time.LocalDate
-import java.util.*
+import java.util.Date
 
 class TestActivity : AppCompatActivity(), FragmentChangeListener {
 
@@ -56,15 +54,16 @@ class TestActivity : AppCompatActivity(), FragmentChangeListener {
         val q6 = q3.copy(number = 6)
         val q7 = q1.copy(number = 7)
         val s2 = s1.copy(number = 2, questionCount = 3, maxPoints = 3, questions = listOf(q5, q6, q7))
-        val test = Test(setting, listOf(s1, s2), 7, 7,
+        val test = Test(setting, listOf(s1, s2), 7, 7, 100,
             Result(setting.toString(), Date(), 7, 0, 0, 7))
-        val fragment = QuestionFragment(test, 0, Int.MIN_VALUE, Int.MIN_VALUE)
+
+        val fragment = QuestionFragment(test, 0, QuestionFragment.NO_QUESTION, QuestionFragment.NO_QUESTION)
         swapFragment(fragment, true)
     }
 
     override fun swapFragment(newFragment: Fragment, stack: Boolean) {
         val transaction = supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, newFragment)
+            .replace(R.id.test_fragment_container, newFragment)
         if (stack) {
             transaction.addToBackStack(newFragment.toString())
         }

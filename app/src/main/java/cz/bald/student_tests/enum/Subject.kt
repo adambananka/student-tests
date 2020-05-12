@@ -2,13 +2,13 @@ package cz.bald.student_tests.enum
 
 import android.os.Parcelable
 
-interface Subject: Parcelable {
+interface Subject : Parcelable {
 
-    fun getAllSubjects(): Array<String>
+    fun getAllSubjects(): List<String>
 
     fun getSubjectName(): String
 
     fun of(text: String): Subject
 
-    fun getYearsOfSubject(): Array<Int>
+    fun getYearsOfSubject(): List<Int>
 }

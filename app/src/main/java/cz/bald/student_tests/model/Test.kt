@@ -5,5 +5,6 @@ data class Test(
     val sections: List<Section>,
     val questionsCount: Int,
     val maxPoints: Int,
+    val timeAvailable: Int,
     var result: Result
 )

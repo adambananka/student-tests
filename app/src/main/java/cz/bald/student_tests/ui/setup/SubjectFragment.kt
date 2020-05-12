@@ -21,12 +21,11 @@ class SubjectFragment(private val testSetting: TestSetting) : Fragment() {
         retainInstance = true
         val view = inflater.inflate(R.layout.fragment_setup_subject, container, false)
 
-        view.subject_selection_text_view.text = testSetting.type.name + " - " + testSetting.language.name
-
-        view.subject_list.adapter = ArrayAdapter<String>(this.requireContext(),
-            android.R.layout.simple_list_item_1, testSetting.subject.getAllSubjects())
-
-        view.subject_list.setOnItemClickListener{ adapterView, _, i, _ ->
+        view.setup_subject_selection_value.text = getString(R.string.setup_subject_selection_value,
+            testSetting.type.name, testSetting.type.name)
+        view.setup_subject_subject_list.adapter = ArrayAdapter<String>(this.requireContext(),
+            android.R.layout.simple_list_item_1, testSetting.language.getSubjects())
+        view.setup_subject_subject_list.setOnItemClickListener{ adapterView, _, i, _ ->
             val fcl = activity as FragmentChangeListener
             testSetting.subject = testSetting.subject.of(adapterView.getItemAtPosition(i) as String)
             fcl.swapFragment(YearFragment(testSetting), true)

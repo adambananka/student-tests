@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import cz.bald.student_tests.enum.CzechSubject
 import cz.bald.student_tests.enum.Language
 import cz.bald.student_tests.enum.SlovakSubject
+import cz.bald.student_tests.enum.Subject
 import cz.bald.student_tests.model.TestSetting
 import cz.bald.studenttests.R
 import cz.bald.student_tests.ui.listener.FragmentChangeListener
@@ -23,22 +24,21 @@ class LanguageFragment(private val testSetting: TestSetting) : Fragment() {
         retainInstance = true
         val view = inflater.inflate(R.layout.fragment_setup_language, container, false)
 
-        view.language_selection_text_view.text = testSetting.type.name
-
-        view.slovak_button.setOnClickListener {
-            val fcl = activity as FragmentChangeListener
-            testSetting.language = Language.SLOVAK
-            testSetting.subject = SlovakSubject.SLOVAK
-            fcl.swapFragment(SubjectFragment(testSetting), true)
+        view.setup_language_selection_value.text = testSetting.type.name
+        view.setup_language_slovak_button.setOnClickListener {
+            saveAndContinue(Language.SLOVAK, SlovakSubject.SLOVAK)
         }
-
-        view.czech_button.setOnClickListener {
-            val fcl = activity as FragmentChangeListener
-            testSetting.language = Language.CZECH
-            testSetting.subject = CzechSubject.CZECH
-            fcl.swapFragment(SubjectFragment(testSetting), true)
+        view.setup_language_czech_button.setOnClickListener {
+            saveAndContinue(Language.CZECH, CzechSubject.CZECH)
         }
 
         return view
+    }
+
+    private fun saveAndContinue(lang: Language, subject: Subject) {
+        val fcl = activity as FragmentChangeListener
+        testSetting.language = lang
+        testSetting.subject = subject
+        fcl.swapFragment(SubjectFragment(testSetting), true)
     }
 }

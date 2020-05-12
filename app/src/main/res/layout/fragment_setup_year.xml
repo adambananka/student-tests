@@ -5,33 +5,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/selection_label_text_view"
+        android:id="@+id/setup_year_selection_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/year_fragment_selection"
+        android:text="@string/setup_selection_label"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/year_selection_text_view"
-        android:layout_marginTop="100dp"/>
+        app:layout_constraintRight_toLeftOf="@id/setup_year_year_selection_value"
+        android:layout_marginTop="30dp"/>
 
     <TextView
-        android:id="@+id/year_selection_text_view"
+        android:id="@+id/setup_year_year_selection_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/selection_label_text_view"
+        app:layout_constraintLeft_toRightOf="@id/setup_year_selection_label"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="100dp"/>
+        android:layout_marginTop="30dp"/>
 
     <ListView
-        android:id="@+id/year_list"
+        android:id="@+id/setup_year_year_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/year_selection_text_view"
         android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"/>
+        android:layout_marginBottom="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:foregroundGravity="center"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

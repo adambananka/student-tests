@@ -12,4 +12,4 @@ data class TestSetting(
     var language: Language,
     var subject: Subject,
     var year: Int
-): Parcelable
+) : Parcelable

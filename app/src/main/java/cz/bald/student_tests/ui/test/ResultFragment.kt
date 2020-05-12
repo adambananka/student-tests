@@ -21,11 +21,14 @@ class ResultFragment(private val result: Result) : Fragment() {
         retainInstance = true
         val view = inflater.inflate(R.layout.fragment_test_result, container, false)
 
-        view.result_questions_value.text = result.correctQuestions.toString() + " / " + result.questions
-        view.result_points_value.text = result.points.toString() + " / " + result.maxPoints
-        view.result_percentage_value.text = (100.0 * result.points / result.maxPoints).toString() + "%"
+        view.test_result_questions_value.text = getString(R.string.test_result_questions_value,
+            result.correctQuestions, result.questions)
+        view.test_result_points_value.text = getString(R.string.test_result_points_value, result.points,
+            result.maxPoints)
+        val pct = 100.0 * result.points / result.maxPoints
+        view.test_result_percentage_value.text = getString(R.string.test_result_percentage_value, pct)
 
-        view.result_finish_button.setOnClickListener {
+        view.test_result_finish_button.setOnClickListener {
             startActivity(Intent(activity, SetupActivity::class.java))
         }
 

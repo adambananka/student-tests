@@ -2,19 +2,16 @@ package cz.bald.student_tests.ui.setup
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import cz.bald.student_tests.enum.CzechSubject
 import cz.bald.student_tests.enum.Language
-import cz.bald.student_tests.enum.Subject
 import cz.bald.student_tests.enum.TestType
 import cz.bald.student_tests.model.TestSetting
 import cz.bald.studenttests.R
 import cz.bald.student_tests.ui.listener.FragmentChangeListener
 import cz.bald.student_tests.ui.listener.SetupListener
 import cz.bald.student_tests.ui.test.TestActivity
-import java.time.Year
 
 class SetupActivity : AppCompatActivity(), FragmentChangeListener, SetupListener {
 
@@ -28,14 +25,12 @@ class SetupActivity : AppCompatActivity(), FragmentChangeListener, SetupListener
 
         val setting = TestSetting(TestType.MATURITA, Language.SLOVAK, CzechSubject.CZECH, 0)
         val fragment = StartFragment(setting)
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
+        swapFragment(fragment, false)
     }
 
     override fun swapFragment(newFragment: Fragment, stack: Boolean) {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, newFragment)
+            .replace(R.id.setup_fragment_container, newFragment)
             .addToBackStack(newFragment.toString())
             .commit()
     }

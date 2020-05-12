@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/test_text_view"
+        android:id="@+id/setup_start_test_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -14,8 +14,8 @@
         android:layout_marginTop="200dp"/>
 
     <Button
-        android:id="@+id/start_button"
-        android:text="@string/start_fragment_start_button"
+        android:id="@+id/setup_start_start_button"
+        android:text="@string/setup_start_start_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"

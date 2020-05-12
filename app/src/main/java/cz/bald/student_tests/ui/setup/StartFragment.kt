@@ -20,9 +20,8 @@ class StartFragment(private val testSetting: TestSetting) : Fragment() {
         retainInstance = true
         val view = inflater.inflate(R.layout.fragment_setup_start, container, false)
 
-        view.test_text_view.text = testSetting.type.name
-
-        view.start_button.setOnClickListener {
+        view.setup_start_test_value.text = testSetting.type.name
+        view.setup_start_start_button.setOnClickListener {
             val fcl = activity as FragmentChangeListener
             fcl.swapFragment(LanguageFragment(testSetting), true)
         }
