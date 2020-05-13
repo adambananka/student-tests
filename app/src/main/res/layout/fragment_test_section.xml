@@ -5,14 +5,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/section_text"
+        android:id="@+id/test_section_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 
     <Button
-        android:id="@+id/section_back_button"
+        android:id="@+id/test_section_back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/test_back_button"
@@ -22,7 +24,7 @@
         android:layout_marginBottom="20dp"/>
 
     <Button
-        android:id="@+id/section_question_button"
+        android:id="@+id/test_section_question_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/test_section_question_button"
@@ -32,7 +34,7 @@
         android:layout_marginBottom="20dp"/>
 
     <Button
-        android:id="@+id/section_next_button"
+        android:id="@+id/test_section_next_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/test_next_button"
