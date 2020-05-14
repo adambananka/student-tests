@@ -67,9 +67,9 @@ class QuestionFragment(private val test: Test, private val section: Int,
             R.string.test_question_number_value, question.number, test.questionsCount)
         frag.test_question_test_text.text = question.text
         frag.test_question_test_answers.adapter = ArrayAdapter<String>(this.requireContext(),
-            android.R.layout.simple_list_item_1, question.answers)
+            android.R.layout.simple_list_item_activated_1, question.answers) //simple_list_item_checked, simple_list_item_single_choice
         if (question.userAnswer.isNotEmpty()) {
-            frag.test_question_test_answers.setSelection(question.userAnswer.toInt()) //TODO
+            frag.test_question_test_answers.setItemChecked(question.userAnswer.toInt(), true)
         }
         frag.test_question_test_answers.setOnItemClickListener { _, view, i, _ ->
             question.userAnswer = i.toString()
