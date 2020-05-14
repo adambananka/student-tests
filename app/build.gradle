@@ -7,7 +7,7 @@ android {
 
 
     defaultConfig {
-        applicationId "cz.bald.student_tests"
+        applicationId "cz.bald.studenttests"
         minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
