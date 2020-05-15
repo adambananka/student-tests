@@ -1,9 +1,9 @@
 package cz.bald.student_tests.model
 
 import android.os.Parcelable
-import cz.bald.student_tests.enum.Language
-import cz.bald.student_tests.enum.Subject
-import cz.bald.student_tests.enum.TestType
+import cz.bald.student_tests.enums.Language
+import cz.bald.student_tests.enums.Subject
+import cz.bald.student_tests.enums.TestType
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

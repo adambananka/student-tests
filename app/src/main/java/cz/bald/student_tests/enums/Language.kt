@@ -1,4 +1,4 @@
-package cz.bald.student_tests.enum
+package cz.bald.student_tests.enums
 
 enum class Language {
     SLOVAK {

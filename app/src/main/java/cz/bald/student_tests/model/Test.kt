@@ -6,5 +6,5 @@ data class Test(
     val questionsCount: Int,
     val maxPoints: Int,
     val timeAvailable: Int,
-    var result: Result
+    var result: Result?
 )

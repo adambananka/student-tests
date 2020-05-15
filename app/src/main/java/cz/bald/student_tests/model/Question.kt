@@ -1,6 +1,6 @@
 package cz.bald.student_tests.model
 
-import cz.bald.student_tests.enum.QuestionType
+import cz.bald.student_tests.enums.QuestionType
 
 data class Question(
     val number: Int,
