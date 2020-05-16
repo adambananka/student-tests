@@ -1,6 +1,8 @@
 package cz.bald.student_tests.ui.test
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -8,15 +10,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import cz.bald.student_tests.enum.QuestionType
+import cz.bald.student_tests.database.StudentTestsDatabase
+import cz.bald.student_tests.enums.QuestionType
 import cz.bald.student_tests.model.Question
+import cz.bald.student_tests.model.Result
 import cz.bald.student_tests.model.Test
 import cz.bald.student_tests.ui.listener.FragmentChangeListener
 import cz.bald.studenttests.R
 import kotlinx.android.synthetic.main.fragment_test_question_open.view.*
 import kotlinx.android.synthetic.main.fragment_test_question_test.view.*
 import kotlinx.android.synthetic.main.fragment_test_section.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.Date
 
 class QuestionFragment(private val test: Test, private val section: Int,
@@ -148,13 +156,12 @@ class QuestionFragment(private val test: Test, private val section: Int,
         } else {
             button.text = getString(R.string.test_finish_button)
             button.setOnClickListener {
-                calculateResult()
-                fcl.swapFragment(ResultFragment(test.result), true)
+                fcl.swapFragment(ResultFragment(calculateAndSaveResult()), true)
             }
         }
     }
 
-    private fun calculateResult() {
+    private fun calculateAndSaveResult(): Result {
         var correct = 0
         var points = 0
         test.sections.forEach { section ->
@@ -165,9 +172,22 @@ class QuestionFragment(private val test: Test, private val section: Int,
                 }
             }
         }
-        test.result.date = Date()
-        test.result.correctQuestions = correct
-        test.result.points = points
+        val result = Result(0, test.setting, Date(), test.questionsCount, correct, points,
+            test.maxPoints)
+        test.result = result
+
+        var newId = 0L
+        CoroutineScope(Dispatchers.IO).launch {
+            context?.let { context ->
+                newId = StudentTestsDatabase.getInstance(context).resultDao().insert(result)
+            }
+        }.invokeOnCompletion {
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(context, "Inserted id: $newId", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        return result
     }
 
     private class OpenQuestionAnswerChangeListener(private val question: Question) : TextWatcher {

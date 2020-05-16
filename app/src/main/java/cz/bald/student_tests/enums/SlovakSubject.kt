@@ -1,12 +1,12 @@
-package cz.bald.student_tests.enum
+package cz.bald.student_tests.enums
 
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-enum class CzechSubject(private val firstYear: Int, private val lastYear: Int) : Subject {
-    CZECH(2016, 2019),
-    ENGLISH(2016, 2019),
-    MATH(2016, 2019);
+enum class SlovakSubject(private val firstYear: Int, private val lastYear: Int) : Subject {
+    SLOVAK(2009, 2019),
+    ENGLISH(2009, 2019),
+    MATH(2009, 2019);
 
     override fun getAllSubjects(): List<String> {
         return values().map { subject -> subject.name }

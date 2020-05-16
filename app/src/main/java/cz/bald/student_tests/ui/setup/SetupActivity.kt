@@ -4,9 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import cz.bald.student_tests.enum.CzechSubject
-import cz.bald.student_tests.enum.Language
-import cz.bald.student_tests.enum.TestType
+import cz.bald.student_tests.enums.CzechSubject
+import cz.bald.student_tests.enums.Language
+import cz.bald.student_tests.enums.TestType
 import cz.bald.student_tests.model.TestSetting
 import cz.bald.studenttests.R
 import cz.bald.student_tests.ui.listener.FragmentChangeListener

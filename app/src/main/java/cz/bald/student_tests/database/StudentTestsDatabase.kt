@@ -5,13 +5,15 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import cz.bald.student_tests.database.dao.ResultDao
+import cz.bald.student_tests.model.Result
 
 
-@Database(entities = [/*Entity::class*/], version = 1)
-@TypeConverters(DateTypeConverter::class)
+@Database(entities = [Result::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class StudentTestsDatabase : RoomDatabase() {
 
-    //abstract fun entityDao(): EntityDao
+    abstract fun resultDao(): ResultDao
 
     companion object {
         private var INSTANCE: StudentTestsDatabase? = null
