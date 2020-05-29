@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="cz.bald.student_tests.ui.setup.SetupActivity">
+        <activity android:name="cz.bald.student_tests.ui.setup.SetupActivity"
+            android:theme="@style/SetupActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
