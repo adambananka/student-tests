@@ -1,6 +1,9 @@
 <resources>
 <!--    Application general -->
     <string name="app_name">StudentTests</string>
+    <string name="nav_menu_maturita">Maturita</string>
+    <string name="nav_menu_open">open</string>
+    <string name="nav_menu_close">close</string>
 
 <!--    Setup Activity general -->
     <string name="setup_selection_label">Selection:</string>

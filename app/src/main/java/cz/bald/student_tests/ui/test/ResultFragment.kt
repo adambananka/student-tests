@@ -48,6 +48,7 @@ class ResultFragment(private val result: Result) : Fragment() {
 
         view.test_result_finish_button.setOnClickListener {
             startActivity(Intent(activity, SetupActivity::class.java))
+            activity?.finish()
         }
 
         return view
