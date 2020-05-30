@@ -1,14 +1,20 @@
 package cz.bald.student_tests.ui.test
 
 import android.os.Bundle
+import android.os.Environment
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import cz.bald.student_tests.enums.QuestionType
-import cz.bald.student_tests.model.*
+import cz.bald.student_tests.model.Question
+import cz.bald.student_tests.model.Section
+import cz.bald.student_tests.model.TestSetting
+import cz.bald.student_tests.service.JsonConvertManager
 import cz.bald.student_tests.ui.listener.FragmentChangeListener
 import cz.bald.student_tests.ui.setup.SetupActivity
 import cz.bald.studenttests.R
+import java.io.File
+
 
 class TestActivity : AppCompatActivity(), FragmentChangeListener {
 
@@ -56,7 +62,11 @@ class TestActivity : AppCompatActivity(), FragmentChangeListener {
             val q7 = q1.copy(number = 7)
             val s2 = s1.copy(number = 2, questionCount = 3, maxPoints = 3,
                 questions = listOf(q5, q6, q7))
-            val test = Test(setting, listOf(s1, s2), 7, 7, 100, null)
+            //val test = Test(setting, listOf(s1, s2), 7, 7, 100, null)
+            val test = JsonConvertManager.convertJsonToTest(File(
+                Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOWNLOADS
+                ), "MATURITA_SJL_2019.json").readText())
 
             val fragment = QuestionFragment(test, 0, QuestionFragment.NO_QUESTION,
                 QuestionFragment.NO_QUESTION)

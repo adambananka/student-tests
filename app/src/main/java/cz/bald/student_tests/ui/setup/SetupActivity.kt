@@ -1,7 +1,13 @@
 package cz.bald.student_tests.ui.setup
 
+import android.Manifest
+import android.app.DownloadManager
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +33,7 @@ class SetupActivity : AppCompatActivity(), FragmentChangeListener, SetupListener
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var prefs: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +43,11 @@ class SetupActivity : AppCompatActivity(), FragmentChangeListener, SetupListener
             val setting = TestSetting(TestType.MATURITA, Language.SLOVAK, CzechSubject.CZECH, 0)
             val fragment = StartFragment(setting)
             swapFragment(fragment, false)
+        }
+        prefs = getSharedPreferences("cz.bald.student_tests", MODE_PRIVATE)
+        if (prefs.getBoolean("firstRun", true)) {
+            downloadFile()
+            prefs.edit().putBoolean("firstRun", false).apply()
         }
     }
 
@@ -91,5 +103,21 @@ class SetupActivity : AppCompatActivity(), FragmentChangeListener, SetupListener
         } else {
             super.onBackPressed()
         }
+    }
+
+    private fun downloadFile() {
+        requestPermissions(
+            arrayOf(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ), 1
+        )
+        val downloadUrl= "https://drive.google.com/uc?export=download&id=1cS7wYBtSRUJ92MXq0VMGxY0-R-dKvCo5"
+        val r = DownloadManager.Request(Uri.parse(downloadUrl))
+        r.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "MATURITA_SJL_2019.json")
+        r.allowScanningByMediaScanner()
+        r.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        val dm = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        dm.enqueue(r)
     }
 }
