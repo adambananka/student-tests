@@ -5,13 +5,17 @@ import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -20,10 +24,11 @@ import cz.bald.student_tests.enums.CzechSubject
 import cz.bald.student_tests.enums.Language
 import cz.bald.student_tests.enums.TestType
 import cz.bald.student_tests.model.TestSetting
-import cz.bald.studenttests.R
 import cz.bald.student_tests.ui.listener.FragmentChangeListener
 import cz.bald.student_tests.ui.listener.SetupListener
 import cz.bald.student_tests.ui.test.TestActivity
+import cz.bald.studenttests.R
+
 
 class SetupActivity : AppCompatActivity(), FragmentChangeListener, SetupListener {
 
@@ -44,10 +49,27 @@ class SetupActivity : AppCompatActivity(), FragmentChangeListener, SetupListener
             val fragment = StartFragment(setting)
             swapFragment(fragment, false)
         }
+        requestStoragePermission()
         prefs = getSharedPreferences("cz.bald.student_tests", MODE_PRIVATE)
         if (prefs.getBoolean("firstRun", true)) {
             downloadFile()
             prefs.edit().putBoolean("firstRun", false).apply()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+
+        if (requestCode == 1) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            } else {
+                Toast.makeText(this, "You just denied the permission", Toast.LENGTH_LONG)
+                    .show()
+                finish()
+            }
         }
     }
 
@@ -105,13 +127,22 @@ class SetupActivity : AppCompatActivity(), FragmentChangeListener, SetupListener
         }
     }
 
-    private fun downloadFile() {
-        requestPermissions(
-            arrayOf(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
+    private fun requestStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            return
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            return
+        ActivityCompat.requestPermissions(
+            this, arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
             ), 1
         )
+    }
+
+    private fun downloadFile() {
         val downloadUrl= "https://drive.google.com/uc?export=download&id=1cS7wYBtSRUJ92MXq0VMGxY0-R-dKvCo5"
         val r = DownloadManager.Request(Uri.parse(downloadUrl))
         r.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "MATURITA_SJL_2019.json")
