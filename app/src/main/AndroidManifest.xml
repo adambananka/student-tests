@@ -19,5 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name="cz.bald.student_tests.ui.test.TestActivity" />
+        <activity android:name="cz.bald.student_tests.ui.result.ResultActivity"
+            android:theme="@style/SetupActivityTheme"/>
     </application>
 </manifest>
