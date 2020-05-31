@@ -2,6 +2,7 @@
 <!--    Application general -->
     <string name="app_name">StudentTests</string>
     <string name="nav_menu_maturita">Maturita</string>
+    <string name="nav_menu_results">Results</string>
     <string name="nav_menu_open">open</string>
     <string name="nav_menu_close">close</string>
 
@@ -48,4 +49,12 @@
     <string name="test_result_percentage">Percentage:</string>
     <string name="test_result_percentage_value">%1$.2f</string>
     <string name="test_result_finish_button">Close</string>
+
+<!--    Result Activity general -->
+    <string name="result_list_no_results">No results yet! :)</string>
+    <string name="result_list_setting_header">%1$s %2$d</string>
+    <string name="result_list_setting_bottom">%1$s - %2$s</string>
+    <string name="result_list_questions">Questions: %1$d / %2$d</string>
+    <string name="result_list_points">Points: %1$d / %2$d</string>
+    <string name="result_list_percentage">Percentage: %1$.2f</string>
 </resources>

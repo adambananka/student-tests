@@ -23,6 +23,10 @@ class JsonConvertManager {
             return result
         }
 
+        fun convertTestToJson(test: Test): String {
+            return converter.toJson(test)
+        }
+
         fun convertJsonToTest(json: String): Test {
             return converter.fromJson(json, Test::class.java)
         }
