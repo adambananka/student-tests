@@ -16,6 +16,7 @@ import cz.bald.student_tests.model.REQUEST_STORAGE_PERMISSION
 import cz.bald.student_tests.model.Test
 import cz.bald.student_tests.model.TestSetting
 import cz.bald.student_tests.service.DownloadService
+import cz.bald.student_tests.ui.common.LoadPlaceHolderFragment
 import cz.bald.student_tests.ui.listener.FragmentChangeListener
 import cz.bald.student_tests.ui.setup.SetupActivity
 import cz.bald.studenttests.R
@@ -29,6 +30,7 @@ class TestActivity : AppCompatActivity(), FragmentChangeListener {
 
     private lateinit var setting : TestSetting
     private lateinit var fragment : QuestionFragment
+    private var receiverRegistered = false
     private val downloadService = DownloadService()
     private var downloadID: Long = -100
     private var downloadComplete : Boolean = false
@@ -38,11 +40,12 @@ class TestActivity : AppCompatActivity(), FragmentChangeListener {
         setContentView(R.layout.activity_test)
 
         if (savedInstanceState == null) {
+            swapFragment(LoadPlaceHolderFragment(), false)
             setting = intent.getParcelableExtra(SetupActivity.ARG_SETUP)
-            Toast.makeText(this, setting.toString(), Toast.LENGTH_LONG).show()
             if (downloadService.requestStoragePermission(this)) {
                 downloadFile()
             }
+            receiverRegistered = true
             registerReceiver(onDownloadComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
         }
     }
@@ -74,7 +77,7 @@ class TestActivity : AppCompatActivity(), FragmentChangeListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(onDownloadComplete)
+        if (receiverRegistered) unregisterReceiver(onDownloadComplete)
     }
 
     private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {

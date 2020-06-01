@@ -3,10 +3,8 @@
 
     <group android:checkableBehavior="single">
         <item android:id="@+id/nav_menu_maturita"
-            android:icon="@mipmap/ic_launcher"
             android:title="@string/nav_menu_maturita"/>
         <item android:id="@+id/nav_menu_results"
-            android:icon="@mipmap/ic_launcher"
             android:title="@string/nav_menu_results"/>
     </group>
 </menu>

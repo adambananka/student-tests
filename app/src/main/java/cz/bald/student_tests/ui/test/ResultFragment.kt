@@ -28,14 +28,9 @@ class ResultFragment(private val result: Result) : Fragment() {
         retainInstance = true
         val view = inflater.inflate(R.layout.fragment_test_result, container, false)
 
-        var results = emptyList<Result>()
         CoroutineScope(Dispatchers.IO).launch {
             context?.let { context ->
-                results = StudentTestsDatabase.getInstance(context).resultDao().getAll()
-            }
-        }.invokeOnCompletion {
-            Handler(Looper.getMainLooper()).post {
-                Toast.makeText(context, "Results saved: " + results.size, Toast.LENGTH_SHORT).show()
+                StudentTestsDatabase.getInstance(context).resultDao().getAll()
             }
         }
 

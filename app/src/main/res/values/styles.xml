@@ -18,10 +18,17 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="PrimaryButton" parent="Widget.AppCompat.TextView">
-        <item name="android:layout_margin">8dp</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:backgroundTint">@color/colorPrimary</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="SetupTitle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
     </style>
 
 </resources>

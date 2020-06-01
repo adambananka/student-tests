@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import cz.bald.student_tests.enums.TestType
 import cz.bald.student_tests.model.TestSetting
 import cz.bald.studenttests.R
 import cz.bald.student_tests.ui.listener.FragmentChangeListener
@@ -20,7 +21,10 @@ class StartFragment(private val testSetting: TestSetting) : Fragment() {
         retainInstance = true
         val view = inflater.inflate(R.layout.fragment_setup_start, container, false)
 
-        view.setup_start_test_value.text = testSetting.type.name
+        when (testSetting.type) {
+            TestType.MATURITA -> view.setup_start_test_image.foreground = resources
+                .getDrawable(R.drawable.maturita, context?.theme)
+        }
         view.setup_start_start_button.setOnClickListener {
             val fcl = activity as FragmentChangeListener
             fcl.swapFragment(LanguageFragment(testSetting), true)
