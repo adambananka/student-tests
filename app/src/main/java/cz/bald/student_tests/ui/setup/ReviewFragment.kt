@@ -20,9 +20,10 @@ class ReviewFragment(private val testSetting: TestSetting) : Fragment() {
         retainInstance = true
         val view = inflater.inflate(R.layout.fragment_setup_review, container, false)
 
-        view.setup_review_selection_label.text = getString(R.string.setup_review_selection_value,
-            testSetting.type.name, testSetting.language.name, testSetting.subject.getSubjectName(),
-            testSetting.year)
+        view.setup_review_type_value.text = testSetting.type.name
+        view.setup_review_language_value.text = testSetting.language.name
+        view.setup_review_subject_value.text = testSetting.subject.getSubjectName()
+        view.setup_review_year_value.text = testSetting.year.toString()
         view.setup_review_confirm_button.setOnClickListener{
             val fcl = activity as SetupListener
             fcl.finishSetup(testSetting)

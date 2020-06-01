@@ -24,7 +24,6 @@ class LanguageFragment(private val testSetting: TestSetting) : Fragment() {
         retainInstance = true
         val view = inflater.inflate(R.layout.fragment_setup_language, container, false)
 
-        view.setup_language_selection_value.text = testSetting.type.name
         view.setup_language_slovak_button.setOnClickListener {
             saveAndContinue(Language.SLOVAK, SlovakSubject.SLOVAK)
         }

@@ -10,9 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import cz.bald.student_tests.database.StudentTestsDatabase
 import cz.bald.student_tests.model.Result
+import cz.bald.student_tests.ui.common.LoadPlaceHolderFragment
 import cz.bald.student_tests.ui.setup.SetupActivity
 import cz.bald.studenttests.R
 import kotlinx.coroutines.CoroutineScope
@@ -30,6 +32,7 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
         setupNavDrawer()
+        swapFragment(LoadPlaceHolderFragment())
         if (savedInstanceState == null) {
             retrieveResultsAndShow()
         }
@@ -65,11 +68,15 @@ class ResultActivity : AppCompatActivity() {
             results = StudentTestsDatabase.getInstance(this@ResultActivity).resultDao().getAll()
         }.invokeOnCompletion {
             Handler(Looper.getMainLooper()).post {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.result_fragment_container, ResultListFragment(results))
-                    .commit()
+                swapFragment(ResultListFragment(results))
             }
         }
+    }
+
+    private fun swapFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.result_fragment_container, fragment)
+            .commit()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

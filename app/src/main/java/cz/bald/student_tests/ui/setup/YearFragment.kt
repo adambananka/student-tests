@@ -21,8 +21,6 @@ class YearFragment(private val testSetting: TestSetting) : Fragment() {
         retainInstance = true
         val view = inflater.inflate(R.layout.fragment_setup_year, container, false)
 
-        view.setup_year_year_selection_value.text = getString(R.string.setup_year_selection_value,
-            testSetting.type.name, testSetting.language.name, testSetting.subject.getSubjectName())
         view.setup_year_year_list.adapter = ArrayAdapter<Int>(this.requireContext(),
             android.R.layout.simple_list_item_1, testSetting.subject.getYearsOfSubject())
         view.setup_year_year_list.setOnItemClickListener { adapterView, _, i, _ ->

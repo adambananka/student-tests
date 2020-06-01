@@ -2,21 +2,14 @@ package cz.bald.student_tests.ui.test
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import cz.bald.student_tests.database.StudentTestsDatabase
 import cz.bald.student_tests.model.Result
 import cz.bald.student_tests.ui.setup.SetupActivity
 import cz.bald.studenttests.R
 import kotlinx.android.synthetic.main.fragment_test_result.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class ResultFragment(private val result: Result) : Fragment() {
 
@@ -27,17 +20,6 @@ class ResultFragment(private val result: Result) : Fragment() {
     ): View? {
         retainInstance = true
         val view = inflater.inflate(R.layout.fragment_test_result, container, false)
-
-        var results = emptyList<Result>()
-        CoroutineScope(Dispatchers.IO).launch {
-            context?.let { context ->
-                results = StudentTestsDatabase.getInstance(context).resultDao().getAll()
-            }
-        }.invokeOnCompletion {
-            Handler(Looper.getMainLooper()).post {
-                Toast.makeText(context, "Results saved: " + results.size, Toast.LENGTH_SHORT).show()
-            }
-        }
 
         view.test_result_questions_value.text = getString(R.string.test_result_questions_value,
             result.correctQuestions, result.questions)

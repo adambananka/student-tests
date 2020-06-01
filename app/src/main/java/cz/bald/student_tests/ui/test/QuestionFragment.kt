@@ -1,8 +1,6 @@
 package cz.bald.student_tests.ui.test
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -10,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import cz.bald.student_tests.database.StudentTestsDatabase
 import cz.bald.student_tests.enums.QuestionType
@@ -59,6 +56,8 @@ class QuestionFragment(private val test: Test, private val section: Int,
     private fun createSectionView(inflater: LayoutInflater, container: ViewGroup?): View {
         val frag = inflater.inflate(R.layout.fragment_test_section, container, false)
 
+        frag.test_section_title.text = getString(R.string.test_section_title,
+            test.sections[section].number)
         frag.test_section_text.text = test.sections[section].text
         setupBackButton(frag.test_section_back_button)
         setupNavButton(frag.test_section_question_button, false)
@@ -71,8 +70,10 @@ class QuestionFragment(private val test: Test, private val section: Int,
         val frag = inflater.inflate(R.layout.fragment_test_question_test, container, false)
         val question = test.sections[section].questions[question]
 
-        frag.test_question_test_question_number_value.text = getString(
-            R.string.test_question_number_value, question.number, test.questionsCount)
+        frag.test_question_test_section_label.text = getString(R.string.test_section_title,
+            test.sections[section].number)
+        frag.test_question_test_question_label.text = getString(
+            R.string.test_question_number, question.number, test.questionsCount)
         frag.test_question_test_text.text = question.text
         frag.test_question_test_answers.adapter = ArrayAdapter<String>(this.requireContext(),
             android.R.layout.simple_list_item_activated_1, question.answers)
@@ -94,8 +95,10 @@ class QuestionFragment(private val test: Test, private val section: Int,
         val frag = inflater.inflate(R.layout.fragment_test_question_open, container, false)
         val question = test.sections[section].questions[question]
 
-        frag.test_question_open_question_number_value.text = getString(
-            R.string.test_question_number_value, question.number, test.questionsCount)
+        frag.test_question_open_section_label.text = getString(R.string.test_section_title,
+            test.sections[section].number)
+        frag.test_question_open_question_label.text = getString(
+            R.string.test_question_number, question.number, test.questionsCount)
         frag.test_question_open_text.text = question.text
         frag.test_question_open_answer.text = Editable.Factory.getInstance()
             .newEditable(question.userAnswer)
@@ -166,9 +169,17 @@ class QuestionFragment(private val test: Test, private val section: Int,
         var points = 0
         test.sections.forEach { section ->
             section.questions.forEach { question ->
-                if (question.userAnswer.equals(question.correctAnswer)) {
-                    correct++
-                    points += question.points
+                if (question.type == QuestionType.OPEN) {
+                    val correctAnswers = question.correctAnswer.split("/")
+                    if (correctAnswers.contains(question.userAnswer)) {
+                        correct++
+                        points += question.points
+                    }
+                } else {
+                    if (question.userAnswer == question.correctAnswer) {
+                        correct++
+                        points += question.points
+                    }
                 }
             }
         }
@@ -176,14 +187,9 @@ class QuestionFragment(private val test: Test, private val section: Int,
             test.maxPoints)
         test.result = result
 
-        var newId = 0L
         CoroutineScope(Dispatchers.IO).launch {
             context?.let { context ->
-                newId = StudentTestsDatabase.getInstance(context).resultDao().insert(result)
-            }
-        }.invokeOnCompletion {
-            Handler(Looper.getMainLooper()).post {
-                Toast.makeText(context, "Inserted id: $newId", Toast.LENGTH_LONG).show()
+                StudentTestsDatabase.getInstance(context).resultDao().insert(result)
             }
         }
 
